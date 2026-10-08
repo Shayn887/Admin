@@ -374,9 +374,20 @@ export default function AdminEditPage() {
 
                                 {/* DATA PROFIL CARD */}
                                 <div className="bg-white rounded-3xl border border-slate-200 p-6 shadow-sm">
-                                    <h2 className="text-xl font-bold mb-6 text-slate-800">
+                                    <h2 className="text-xl font-bold mb-3 text-slate-800">
                                         Data Profil
                                     </h2>
+
+                                    {/* BUKU PETUNJUK PENEMPILAN LINK */}
+                                    <div className="mb-6 p-4 bg-sky-50 border border-sky-200 rounded-2xl flex items-start gap-3">
+                                        <span className="text-lg">💡</span>
+                                        <div className="text-xs sm:text-sm text-sky-900">
+                                            <p className="font-semibold mb-0.5">Petunjuk Pengisian Link:</p>
+                                            <p>
+                                                Untuk <strong>Instagram</strong>, <strong>TikTok</strong>, <strong>Twitter/X</strong>, atau <strong>Spotify</strong>, bisa langsung tempel (paste) link resminya secara langsung.
+                                            </p>
+                                        </div>
+                                    </div>
 
                                     {/* GRID INPUT FIELD */}
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -408,37 +419,50 @@ export default function AdminEditPage() {
                                             label="Instagram"
                                             value={selectedStudent.instagram || ""}
                                             onChange={(value) => updateStudent({ instagram: value })}
+                                            placeholder="https://instagram.com/username"
                                         />
 
                                         <Input
                                             label="Twitter / X"
                                             value={selectedStudent.twitter_x || ""}
                                             onChange={(value) => updateStudent({ twitter_x: value })}
+                                            placeholder="https://x.com/username"
                                         />
 
                                         <Input
                                             label="TikTok"
                                             value={selectedStudent.tiktok || ""}
                                             onChange={(value) => updateStudent({ tiktok: value })}
+                                            placeholder="https://tiktok.com/@username"
                                         />
 
                                         <Input
                                             label="Spotify Track ID #1"
                                             value={selectedStudent.spotify_track_id || ""}
                                             onChange={(value) => updateStudent({ spotify_track_id: value })}
+                                            placeholder="https://open.spotify.com/track/..."
                                         />
 
                                         <Input
                                             label="Spotify Track ID #2"
                                             value={selectedStudent.spotify_track_id_2 || ""}
                                             onChange={(value) => updateStudent({ spotify_track_id_2: value })}
+                                            placeholder="https://open.spotify.com/track/..."
                                         />
 
-                                        <Input
-                                            label="Spotify Track ID #3"
-                                            value={selectedStudent.spotify_track_id_3 || ""}
-                                            onChange={(value) => updateStudent({ spotify_track_id_3: value })}
-                                        />
+                                        <div>
+                                            <Input
+                                                label="Spotify Track ID #3"
+                                                value={selectedStudent.spotify_track_id_3 || ""}
+                                                onChange={(value) => updateStudent({ spotify_track_id_3: value })}
+                                                placeholder="Sedang bermasalah..."
+                                                disabled={true}
+                                                note="⚠️ Sedang Bug"
+                                            />
+                                            <p className="mt-1.5 text-xs text-amber-600 font-medium">
+                                                * Fitur Spotify Track #3 sedang mengalami kendala/bug dan dinonaktifkan sementara.
+                                            </p>
+                                        </div>
                                     </div>
 
                                     {/* ABOUT & QUOTE */}
@@ -447,6 +471,12 @@ export default function AdminEditPage() {
                                             label="About"
                                             value={selectedStudent.about || ""}
                                             onChange={(value) => updateStudent({ about: value })}
+                                        />
+
+                                        <Textarea
+                                            label="Quote"
+                                            value={selectedStudent.quote || ""}
+                                            onChange={(value) => updateStudent({ quote: value })}
                                         />
                                     </div>
 
@@ -514,17 +544,26 @@ export default function AdminEditPage() {
 // ========================================
 // INPUT COMPONENT
 // ========================================
-function Input({ label, value, onChange }) {
+function Input({ label, value, onChange, placeholder, disabled, note }) {
     return (
         <div>
-            <label className="block text-sm font-semibold text-slate-700 mb-2">
-                {label}
-            </label>
+            <div className="flex items-center justify-between mb-2">
+                <label className="block text-sm font-semibold text-slate-700">
+                    {label}
+                </label>
+                {note && <span className="text-xs text-amber-600 font-semibold">{note}</span>}
+            </div>
             <input
                 type="text"
                 value={value || ""}
+                disabled={disabled}
+                placeholder={placeholder}
                 onChange={(e) => onChange(e.target.value)}
-                className="w-full border border-slate-200 rounded-xl px-4 py-3 outline-none focus:border-slate-400 text-slate-800 font-medium"
+                className={`w-full border rounded-xl px-4 py-3 outline-none transition text-slate-800 font-medium ${
+                    disabled
+                        ? "bg-slate-100 border-slate-200 text-slate-400 cursor-not-allowed"
+                        : "border-slate-200 focus:border-slate-400"
+                }`}
             />
         </div>
     );
