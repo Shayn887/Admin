@@ -14,8 +14,8 @@ const ovo = Ovo({
 });
 
 export const metadata = {
-  title: "RPLG ICN",
-  description: "RPLG 2024-2027",
+  title: "MPLB2",
+  description: "MPLB2 2024-2027",
   icons: {
     icon: [
       {
